@@ -1,32 +1,20 @@
-// Assuming you have web3.js library and a smart contract deployed on Ethereum
+// Assuming you have a 'Loan' smart contract with appropriate functions
 
-const Web3 = require('web3');
-const web3 = new Web3('YOUR_ETHEREUM_NODE_URL');
-
-const contractABI = [
-  // Replace this with your actual contract ABI
-];
-
-const contractAddress = 'YOUR_CONTRACT_ADDRESS';
-const myAccount = 'YOUR_WALLET_ADDRESS';
-
-const contract = new web3.eth.Contract(contractABI, contractAddress);
-
-// Function to perform a transaction
-async function sellTShirt(price) {
+// Function to request a loan
+async function requestLoan(amount) {
   try {
-    const gas = await contract.methods.sellTShirt(price).estimateGas();
-    const result = await contract.methods.sellTShirt(price).send({
+    const gas = await contract.methods.requestLoan(amount).estimateGas();
+    const result = await contract.methods.requestLoan(amount).send({
       from: myAccount,
       gas: gas,
     });
 
-    console.log('Transaction successful:', result);
+    console.log('Loan request successful:', result);
   } catch (error) {
-    console.error('Transaction failed:', error);
+    console.error('Loan request failed:', error);
   }
 }
 
 // Example usage
-const tShirtPrice = 0.5; // in Ether
-sellTShirt(web3.utils.toWei(tShirtPrice.toString(), 'ether'));
+const loanAmount = 2.0; // in Ether
+requestLoan(web3.utils.toWei(loanAmount.toString(), 'ether'));
