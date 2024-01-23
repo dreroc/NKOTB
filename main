@@ -1,0 +1,32 @@
+// Assuming you have web3.js library and a smart contract deployed on Ethereum
+
+const Web3 = require('web3');
+const web3 = new Web3('YOUR_ETHEREUM_NODE_URL');
+
+const contractABI = [
+  // Replace this with your actual contract ABI
+];
+
+const contractAddress = 'YOUR_CONTRACT_ADDRESS';
+const myAccount = 'YOUR_WALLET_ADDRESS';
+
+const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+// Function to perform a transaction
+async function sellTShirt(price) {
+  try {
+    const gas = await contract.methods.sellTShirt(price).estimateGas();
+    const result = await contract.methods.sellTShirt(price).send({
+      from: myAccount,
+      gas: gas,
+    });
+
+    console.log('Transaction successful:', result);
+  } catch (error) {
+    console.error('Transaction failed:', error);
+  }
+}
+
+// Example usage
+const tShirtPrice = 0.5; // in Ether
+sellTShirt(web3.utils.toWei(tShirtPrice.toString(), 'ether'));
